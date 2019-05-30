@@ -1,13 +1,10 @@
 from scapy.all  import *
 import matplotlib.pyplot as plt
-import csv
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, LineString
 import progressbar
-import descartes
 from capinfos import *
-import numpy as np
 
 n_packets = capinfos("network_traffic.pcap")["packetscount"]
 
