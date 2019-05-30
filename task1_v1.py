@@ -10,7 +10,7 @@ n_packets = capinfos("network_traffic.pcap")["packetscount"]
 
 #setting up the progress bar
 widgets = ['SNIFFING: ', progressbar.Percentage(), progressbar.Bar(), progressbar.SimpleProgress(), ' - ', progressbar.Timer(), ', ', progressbar.ETA()]
-bar = progressbar.ProgressBar(widgets = widgets, max_value=n_packets)
+progress_bar = progressbar.ProgressBar(widgets = widgets, max_value=n_packets)
 
 standard_ports = [1, 2, 3, 7, 8, 9, 13, 17, 19, 20, 21, 22, 23, 25, 53, 67, 68, 69, 70,
                  79, 80, 88, 104, 110, 113, 119, 123, 137, 138, 139, 143, 161, 162, 389,
@@ -19,6 +19,7 @@ standard_ports = [1, 2, 3, 7, 8, 9, 13, 17, 19, 20, 21, 22, 23, 25, 53, 67, 68, 
 #dictionary port_number->value
 traffic_counter = {}
 counter = 0
+
 #for eache port, we count the amount of traffic and update the dictionary
 for port in standard_ports:
     pkts = sniff(offline="network_traffic.pcap", filter="port " + str(port))
@@ -28,8 +29,8 @@ for port in standard_ports:
         else:
             traffic_counter[port] = pkt[IP].len
     counter += 1
-    bar.update(counter)
-bar.finish()
+    progress_bar.update(counter)
+progress_bar.finish()
 
 #exporting to csv
 with open('task_1.csv', mode = 'w') as csv_file:
