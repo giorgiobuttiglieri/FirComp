@@ -117,13 +117,7 @@ print(geo_df)
 plt.show()
 
 
-#y = 1-e^(-k*n)
-#e^(-x) = 1-y
-#1/(1-y) = e^x
-#x = ln(1/0.01) 
-
-#per 3 sia 0.6
-#per n sia 1
+#ehyasdf
 
 
 
