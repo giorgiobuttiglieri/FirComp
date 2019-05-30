@@ -4,6 +4,8 @@ import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, LineString
 import progressbar
+import sys
+sys.path.append(".")
 from capinfos import *
 
 n_packets = capinfos("network_traffic.pcap")["packetscount"]
