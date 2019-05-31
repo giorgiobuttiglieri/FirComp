@@ -123,7 +123,7 @@ for conn_ips, pkts in conn.items():
         n_external_traffic += traffic
 
 
-print(f"The internal internet subnet is {ip_inttostr(privatenet_ip)}/{ip_inttostr(privatenet_mask)}. (estimated)")
+print(f"The internal internet subnet is {ip_inttostr(privatenet_ip)}/{privatenet_mask}. (estimated)")
 print("LOCAL NETWORK:")
 print("     Number of connections(unidirectional):", n_local_conn)
 print("     Traffic generated:", n_local_traffic)
@@ -135,7 +135,7 @@ print("     Number of connections(unidirectional):", n_external_conn)
 print("     Traffic generated:", n_external_traffic)
 
 fig, (ax1, ax2) = plt.subplots(2)
-fig.suptitle(f"The internal internet subnet is {ip_inttostr(privatenet_ip)}/{ip_inttostr(privatenet_mask)}. (estimated)")
+fig.suptitle(f"The internal internet subnet is {ip_inttostr(privatenet_ip)}/{privatenet_mask}. (estimated)")
 
 x = list(range(3))
 
