@@ -6,8 +6,8 @@ Assumption we took for the mandatory tasks:
 Creative tasks descriptions:
 We realized that the provided file "ip_locations.csv" was using random geo coordinates, so we made a python script called "locate_ip.py" to get the real locations of the IPs (file: "real_ip_locations.csv"). The script works by sending a GET request for every IP at the URL "https://extreme-ip-lookup.com/json/{IP}"
 1) The script plots the positions of the host as point on the map
-2)The script analyzes TCP bidirectional connections (packet tracking), then for every connection it counts the number of times there are 3 or more repeated ACK (NACK) so to estimate the number of errors occurred for that specific connection. Finally, it plots
-3)
+2) The script analyzes TCP bidirectional connections (packet tracking), then for every connection it counts the number of times there are 3 or more repeated ACK (NACK) so to estimate the number of errors occurred for that specific connection. Finally, it plots the connection using a variable color going from green to red to indicate the number or errors. It also produces a file called "creative_task_2.csv" where it is listed the number of errors for every connection.
+3) The script
 P.S.: we attached both the results obtained with file "ip_locations.csv" and "real_ip_locations.csv" for creative_task_1 and creative_task_2.
 
 Modules used:
