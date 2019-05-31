@@ -1,10 +1,9 @@
 from scapy.all  import *
-from scapy.layers.l2 import Ether
 from scapy.layers.inet import IP
 from scapy.layers.inet import TCP, UDP, ICMP
 import csv
 
-
+#this object holds an Ip address with all relevant statistics for this task
 class IpAddress:
     def __init__(self, ip_address, traffic):
         self.ip_address = ip_address
@@ -12,6 +11,8 @@ class IpAddress:
         self.protocols = {}
         self.source_ports = {}
         self.destination_ports = {}
+        
+        #most frequent protocols, source port and destination port, with the associated traffic
         self.frequent_protocol = [-1,-1]
         self.frequent_source_port = [-1, -1]
         self.frequent_destination_port = [-1, -1]
@@ -21,6 +22,8 @@ class IpAddress:
             self.protocols[protocol] = 1
         else:
             self.protocols[protocol] += 1
+
+
     def update_source_port(self, source_port):
         if not source_port in self.source_ports:
             self.source_ports[source_port] = 1
