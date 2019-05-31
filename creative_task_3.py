@@ -1,24 +1,12 @@
 # coding=utf-8
 from scapy.all  import *
 import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-import geopandas as gpd
-from shapely.geometry import Point, LineString
 import progressbar
 import sys
 sys.path.append(".")
 from capinfos import *
 
-def ip_inttostr(ipstr):
-    s1 = str(ipstr>>24)
-    s2 = str( (ipstr^(255<<16))>>16 )
-    s3 = str( (ipstr^(255<<8))>>8 )
-    s4 = str(ipstr^255)
-    return f'{s1}.{s2}.{s3}.{s4}'
 
-print(ip_inttostr(1563246869)) ##
-exit()
 n_packets = capinfos("network_traffic.pcap")["packetscount"]
 
 widgets = ['SNIFFING: ', progressbar.Percentage(), progressbar.Bar(), progressbar.SimpleProgress(), ' - ', progressbar.Timer(), ', ', progressbar.ETA()]
@@ -65,9 +53,9 @@ def ip_strtoint(ipstr):
 
 def ip_inttostr(ipstr):
     s1 = str(ipstr>>24)
-    s2 = str( (ipstr^(255<<16))>>16 )
-    s3 = str( (ipstr^(255<<8))>>8 )
-    s4 = str(ipstr^255)
+    s2 = str( (ipstr&(255<<16))>>16 )
+    s3 = str( (ipstr&(255<<8))>>8 )
+    s4 = str(ipstr&255)
     return f'{s1}.{s2}.{s3}.{s4}'
 
 
