@@ -12,7 +12,7 @@ n_packets = capinfos("network_traffic.pcap")["packetscount"]
 
 #setting up the progress bar
 widgets = ['SNIFFING: ', progressbar.Percentage(), progressbar.Bar(), progressbar.SimpleProgress(), ' - ', progressbar.Timer(), ', ', progressbar.ETA()]
-progress_bar = progressbar.ProgressBar(widgets = widgets, max_value=n_packets)
+progress_bar = progressbar.ProgressBar(widgets = widgets, max_value=10000)
 
 def store_ip(_ips = {}, counter=[0]):
     def elaborate(_pkt):
@@ -33,7 +33,7 @@ def store_ip(_ips = {}, counter=[0]):
 #dictionary ip_address->amount of traffic
 ips = {}
 
-sniff(offline="network_traffic.pcap", store = False, prn=store_ip(ips))
+sniff(offline="network_traffic.pcap", store = False, prn=store_ip(ips), count = 10000)
 progress_bar.finish()
 print("Finished to sniff")
 
@@ -82,7 +82,7 @@ def gather_informations(_source_ports, _destination_ports, _protocols, _total_tr
     return elaborate
 
 #for each top 10 ip, we filter all the packets by that ip
-for _ip, _traffic in top_ip.items():
+for _ip, _traffic in top_ip:
     
     #this dictionary will contain all relevant statistics (specific statistic -> traffic)
     statistics = {}
@@ -90,15 +90,15 @@ for _ip, _traffic in top_ip.items():
     source_ports = {}
     destination_ports = {}
     protocols = {}
-    traffic = [0]
-
-    sniff(offline="network_traffic.pcap", filter="ip.src=="+str(_ip)+"or ip.dst==" +str(_ip), prn=gather_informations(source_ports, destination_ports, protocols, total_traffic))
+    total_traffic = [0]
+    #filter="ip.src=="+str(_ip)+" or ip.dst==" +str(_ip)
+    sniff(offline="network_traffic1.pcap", count= 10000, filter="ip and (host 11.22.33.4)", prn=gather_informations(source_ports, destination_ports, protocols, total_traffic), store = 0)
 
     #we get the biggest element of the dictionary. It will become the most frequent source port, destination port etc...
     statistics['source_port'] = source_ports[sorted(source_ports, key = source_ports.__getitem__, reverse=True)[0]]
-    statsitics['destination_ports'] = destination_ports[sorted(destination_ports, key = destination_ports.__getitem__, reverse=True)[0]]
+    statistics['destination_ports'] = destination_ports[sorted(destination_ports, key = destination_ports.__getitem__, reverse=True)[0]]
     statistics['protocol'] = protocols[sorted(protocols, key = protocols.__getitem__, reverse=True)[0]]
-    statistics['traffic'] = traffic[0]
+    statistics['traffic'] = total_traffic[0]
 
     ips_informations[_ip] = statistics
 
