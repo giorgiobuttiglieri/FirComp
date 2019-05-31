@@ -2,6 +2,7 @@
 from scapy.all  import *
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 import geopandas as gpd
 from shapely.geometry import Point, LineString
 import progressbar
@@ -9,6 +10,15 @@ import sys
 sys.path.append(".")
 from capinfos import *
 
+def ip_inttostr(ipstr):
+    s1 = str(ipstr>>24)
+    s2 = str( (ipstr^(255<<16))>>16 )
+    s3 = str( (ipstr^(255<<8))>>8 )
+    s4 = str(ipstr^255)
+    return f'{s1}.{s2}.{s3}.{s4}'
+
+print(ip_inttostr(1563246869)) ##
+exit()
 n_packets = capinfos("network_traffic.pcap")["packetscount"]
 
 widgets = ['SNIFFING: ', progressbar.Percentage(), progressbar.Bar(), progressbar.SimpleProgress(), ' - ', progressbar.Timer(), ', ', progressbar.ETA()]
@@ -29,7 +39,7 @@ def GetConnections(_counter, _conn):
 print("Sniffing started")
 conn = {}
 counter = [0]
-sniff(offline="network_traffic.pcap", store = 0, prn=GetConnections(counter, conn))
+sniff(offline="network_traffic.pcap", store = 0, prn=GetConnections(counter, conn), count=10000)
 bar.finish()
 print("Sniffing finished")
 
@@ -135,4 +145,23 @@ print("     Traffic generated:", n_privatenet_traffic)
 print("EXTERNAL CONNECTIONS TOWARDS INTERNET:")
 print("     Number of connections(unidirectional):", n_external_conn)
 print("     Traffic generated:", n_external_traffic)
-exit()
+
+fig, (ax1, ax2) = plt.subplots(2)
+fig.suptitle(f"The internal internet subnet is {ip_inttostr(privatenet_ip)}/{ip_inttostr(privatenet_mask)}. (estimated)")
+
+x = list(range(3))
+
+conn_list = [n_local_conn, n_privatenet_conn, n_external_conn]
+traffic_list = [n_local_traffic, n_privatenet_traffic, n_external_traffic]
+plt.sca(ax1)
+plt.bar(x, height=conn_list)
+
+for i, _height in enumerate(conn_list):
+    plt.text(i, _height + .1, str(_height), color='red')
+plt.xticks(list(range(3)), ['local ip network connections', 'private internal subnet connections', 'connections towards internet'])
+plt.sca(ax2)
+for i, _height in enumerate(traffic_list):
+    plt.text(i, _height  + .1, str(_height), color='red')
+plt.bar(x, height=traffic_list)
+plt.xticks(list(range(3)), ['local ip network connections', 'private internal subnet connections', 'connections towards internet'])
+plt.show()
