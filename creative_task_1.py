@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from scapy.all  import *
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -240,10 +239,3 @@ for ips, n in bidirectional_conn_errors.items():
         _color = (1-(0.4*n+0.6*max_errors_conn-3)/(max_errors_conn-3),(0.4*n+0.6*max_errors_conn-3)/(max_errors_conn-3),0,0.95)
     geo_df.loc[[ips[0], ips[1]], 'geometry'].plot(ax = ax, color = _color)
 plt.show()
-
-
-
-
-
-
->>>>>>> d6c080daa213b60739533f68c6801a32a6b6c48d

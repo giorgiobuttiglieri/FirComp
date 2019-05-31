@@ -5,16 +5,14 @@ import sys
 sys.path.append(".")
 from capinfos import * #used to count the number of packets in the pcap file
 
-#count the number of packets
-n_packets = capinfos("network_traffic.pcap")["packetscount"]
-
-#setting up the progress bar
-widgets = ['SNIFFING: ', progressbar.Percentage(), progressbar.Bar(), progressbar.SimpleProgress(), ' - ', progressbar.Timer(), ', ', progressbar.ETA()]
-progress_bar = progressbar.ProgressBar(widgets = widgets, max_value=n_packets)
-
 standard_ports = [1, 2, 3, 7, 8, 9, 13, 17, 19, 20, 21, 22, 23, 25, 53, 67, 68, 69, 70,
                  79, 80, 88, 104, 110, 113, 119, 123, 137, 138, 139, 143, 161, 162, 389,
                   411, 443, 445, 465, 502, 514, 554, 563, 587, 591, 631, 636, 666, 993, 995]
+
+#setting up the progress bar
+widgets = ['SNIFFING: ', progressbar.Percentage(), progressbar.Bar(), progressbar.SimpleProgress(), ' - ', progressbar.Timer(), ', ', progressbar.ETA()]
+progress_bar = progressbar.ProgressBar(widgets = widgets, max_value=standard_ports[len(standard_ports)-1])
+
 
 #dictionary port_number->value
 traffic_counter = {}
