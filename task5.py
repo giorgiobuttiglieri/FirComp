@@ -8,13 +8,13 @@ from shapely.geometry import Point, Polygon
 world_map = gpd.read_file('TM_WORLD_BORDERS-0.3.shp')
 
 #reading ip location
-ip_data = pd.read_csv('real.csv')
+ip_data = pd.read_csv('ips_locations.csv')
 
 #setting coordinates type
 crs = {'init':'epsg:4326'}
 
 #creating a list of points with coordinates given by the ip locations
-points = [Point(xy) for xy in zip(ip_data["y"], ip_data["x"])]
+points = [Point(xy) for xy in zip(ip_data["x"], ip_data["y"])]
 
 
 fig, ax = plt.subplots(figsize = (15, 15))
