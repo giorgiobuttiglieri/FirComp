@@ -55,6 +55,7 @@ for index, row in random_locations.iloc[start_index:].iterrows():
         f.write(str(index))
         f.close()
         print("SAVED")
+    #trying to send the request.
     try:
         print("request " + str(counter) + ": ", end = '')
         request = http.request('GET', 'https://extreme-ip-lookup.com/json/'+str(row['ip']))
@@ -70,6 +71,7 @@ for index, row in random_locations.iloc[start_index:].iterrows():
     counter += 1
     time.sleep(1.3)
 
+#updating the file
 random_locations.to_csv('real.csv', index=False)
 
 

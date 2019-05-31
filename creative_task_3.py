@@ -29,7 +29,7 @@ def GetConnections(_counter, _conn):
 print("Sniffing started")
 conn = {}
 counter = [0]
-sniff(offline="network_traffic.pcap", store = 0, prn=GetConnections(counter, conn), count=1000)
+sniff(offline="network_traffic.pcap", store = 0, prn=GetConnections(counter, conn))
 bar.finish()
 print("Sniffing finished")
 
@@ -117,7 +117,7 @@ for conn_ips, pkts in conn.items():
     if conn_ips in localip_conns:
         n_local_conn += 1
         n_local_traffic += traffic
-    elif get_common_netmask(ip_strtoint(conn_ips[0]), privatenet_ip)>=privatenet_mask or get_common_netmask(ip_strtoint(conn_ips[1]), privatenet_ip)>=privatenet_mask:
+    elif get_common_netmask(ip_strtoint(conn_ips[0]), privatenet_ip)>=privatenet_mask and get_common_netmask(ip_strtoint(conn_ips[1]), privatenet_ip)>=privatenet_mask:
         n_privatenet_conn += 1
         n_privatenet_traffic += traffic
     else:

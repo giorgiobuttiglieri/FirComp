@@ -87,7 +87,13 @@ for row in conn_df.index.tolist():
     try:
         lines.append(LineString((Point(ip_loc_df.loc[row[0]][::-1]), Point(ip_loc_df.loc[row[1]][::-1]))))
     except:
+        lines.append(LineString(( Point((0,0)), Point((0,0)) )) )for row in conn_df.index.tolist():
+    #Some ip in the pcap file are not present in the ip_location file (for example 111.81.72.250 (destination))
+    try:
+        lines.append(LineString((Point(ip_loc_df.loc[row[0]][::-1]), Point(ip_loc_df.loc[row[1]][::-1]))))
+    except:
         lines.append(LineString(( Point((0,0)), Point((0,0)) )) )
+
 
 
 
